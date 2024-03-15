@@ -1,0 +1,66 @@
+image:
+#   registry: "docker.io/corda"
+#   registry: "corda-os-docker.software.r3.com"
+#   registry: "corda-ent-docker.software.r3.com"
+  registry: "us-central1-docker.pkg.dev/r3-ps-test-01/corda51-emcrey-registry"
+
+resources:
+  requests:
+    memory: 768Mi
+    cpu: 500m
+  limits:
+    memory: 3000Mi
+    cpu: 2000m
+
+workers:
+  db:
+    resources:
+      requests:
+        cpu: 1000m
+        memory: 1000Mi
+  flow:
+    resources:
+      requests:
+        cpu: 1000m
+  flowMapper:
+    resources:
+      requests:
+        cpu: 1000m
+  verification:
+    resources:
+      requests:
+        cpu: 1500m
+
+bootstrap:
+  kafka:
+    replicas: 1
+db:
+  cluster:
+    host: "prereqs-postgres"
+    username:
+      value: corda
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: "prereqs-postgres"
+          key: "corda-password"
+kafka:
+  bootstrapServers: "prereqs-kafka:9092"
+  sasl:
+    enabled: true
+    # mechanism: "SCRAM-SHA-256"
+    mechanism: "PLAIN"
+    username:
+      value: admin
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: "prereqs-kafka"
+          key: "admin-password"
+  tls:
+    enabled: true
+    truststore:
+      valueFrom:
+        secretKeyRef:
+          name: "prereqs-kafka"
+          key: "ca.crt"
