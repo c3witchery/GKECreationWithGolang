@@ -2,7 +2,7 @@ name: DockerPrep
 runtime: go
 description: Simple GCP GKE with external connectivity
 config:
-  gcp:project: r3-ps-test-01
+  gcp:project: my-gcp-project
   gcp:region: us-central1
   gcp:zone: us-central2-a
   pulumi:tags:
