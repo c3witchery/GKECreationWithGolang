@@ -18,7 +18,7 @@ func main() {
 		}
 		masterVersion := engineVersions.LatestMasterVersion
 
-		cluster, err := container.NewCluster(ctx, "gke-corda51-cluster", &container.ClusterArgs{
+		cluster, err := container.NewCluster(ctx, "my-gke-cluster", &container.ClusterArgs{
 			EnableAutopilot:    pulumi.Bool(true),
 			InitialNodeCount:   pulumi.Int(1),
 			MinMasterVersion:   pulumi.String(masterVersion),
